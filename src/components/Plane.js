@@ -3,7 +3,7 @@ import { Animated, Image } from 'react-native'
 import Images from './Images'
 import Constants from '../Constants'
 
-export default class Bird extends Component {
+export default class Plane extends Component {
     constructor(props) {
         super(props)
 

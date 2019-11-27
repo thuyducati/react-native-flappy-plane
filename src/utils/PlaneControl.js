@@ -98,14 +98,14 @@ export const addPipesAtLocation = (x, world, entities) => {
 const PlaneControl = (entities, { touches, time, dispatch }) => {
     let engine = entities.physics.engine // in setupWorld()
     let world = entities.physics.world // in setupWorld()
-    let bird = entities.bird.body // in setupWorld()
+    let plane = entities.plane.body // in setupWorld()
 
     let hadTouches = false
 
     touches.filter(t => t.type === 'press').forEach(t => {
         if (!hadTouches) {
             if (world.gravity.y === 0.0) {
-                world.gravity.y = 0.8 // tốc độ rơi của plane
+                world.gravity.y = 0.9 // tốc độ rơi của plane
 
                 addPipesAtLocation(
                     (Constants.MAX_WIDTH * 2) - (Constants.PIPE_WIDTH / 2),
@@ -121,9 +121,9 @@ const PlaneControl = (entities, { touches, time, dispatch }) => {
 
             hadTouches = true
             Matter.Body.setVelocity(
-                bird,
+                plane,
                 {
-                    x: bird.velocity.x,
+                    x: plane.velocity.x,
                     y: -40 // độ nảy của plane
                 }
             )
@@ -143,7 +143,7 @@ const PlaneControl = (entities, { touches, time, dispatch }) => {
             )
 
             if (key.indexOf("Top") !== -1 && parseInt(key.replace("pipe", "")) % 2 === 0) {
-                if (entities[key].body.position.x <= bird.position.x && !entities[key].scored) {
+                if (entities[key].body.position.x <= plane.position.x && !entities[key].scored) {
                     entities[key].scored = true
                     dispatch({ type: "score" })
                 }
@@ -168,7 +168,7 @@ const PlaneControl = (entities, { touches, time, dispatch }) => {
                 Matter.Body.setPosition(
                     entities[key].body,
                     {
-                        x: Constants.MAX_WIDTH + (Constants.MAX_WIDTH / 2),
+                        x: Constants.MAX_WIDTH + (Constants.MAX_WIDTH / 2 - 10),
                         y: entities[key].body.position.y
                     }
                 )
@@ -190,7 +190,7 @@ const PlaneControl = (entities, { touches, time, dispatch }) => {
     //     if (pose > 2) {
     //         pose = 1
     //     }
-    //     entities.bird.pose = pose
+    //     entities.plane.pose = pose
     // }
 
     return entities

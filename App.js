@@ -1,18 +1,24 @@
 import React, { Component } from 'react'
-import { View, StatusBar, TouchableOpacity, Text, Image } from 'react-native'
+import {
+  View, StatusBar,
+  TouchableOpacity,
+  Text, Image
+} from 'react-native'
 
 import { GameEngine } from 'react-native-game-engine'
 import Matter from 'matter-js'
 
 import Constants from './src/Constants'
 import PlaneControl, { resetPipeCount } from './src/utils/PlaneControl'
-import Bird from './src/components/Bird'
+import Plane from './src/components/Plane'
 import Floor from './src/components/Ground'
 import Splash from './src/components/Splash'
 import Lives from './src/components/Lives'
 
 import styles from './src/styles/Styles'
 import Images from './src/components/Images'
+
+import { HideNavigationBar } from 'react-native-navigation-bar-color'
 
 export default class App extends Component {
   constructor(props) {
@@ -36,7 +42,7 @@ export default class App extends Component {
     world.gravity.y = 0.0
 
     // rendering the plane
-    let bird = Matter.Bodies.rectangle(
+    let plane = Matter.Bodies.rectangle(
       Constants.MAX_WIDTH / 2,
       Constants.MAX_HEIGHT / 2,
       Constants.PLANE_WIDTH,
@@ -57,7 +63,7 @@ export default class App extends Component {
       { isStatic: true }
     )
 
-    Matter.World.add(world, [bird, floor1, floor2])
+    Matter.World.add(world, [plane, floor1, floor2])
 
     Matter.Events.on(engine, 'collisionStart', (event) => {
       var pairs = event.pairs
@@ -69,10 +75,10 @@ export default class App extends Component {
         engine: engine,
         world: world
       },
-      bird: {
-        body: bird,
+      plane: {
+        body: plane,
         pose: 1,
-        renderer: Bird
+        renderer: Plane
       },
       floor1: {
         body: floor1,
@@ -136,6 +142,8 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
+    HideNavigationBar()
+
     const data = await this.performTimeConsumingTask()
 
     if (data != null) {
