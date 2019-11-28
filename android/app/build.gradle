@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.flappybird"
+        applicationId "com.flappyplane"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
